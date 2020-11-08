@@ -1,3 +1,4 @@
+import argon2 from "argon2";
 import { UserModel } from "./db/Models";
 import startMongoose from "./db";
 
@@ -11,8 +12,10 @@ export default async function (req, res) {
 
   try {
     const instance = new UserModel();
+    const hashPassword = await argon2.hash(password);
     instance.username = username;
-    instance.password = password;
+    instance.password = hashPassword;
+
     instance.save();
     res.status(200).json({ username, password });
   } catch (error) {

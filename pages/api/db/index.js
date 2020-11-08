@@ -1,6 +1,5 @@
 import UserSchema from "./Schemas/UserSchema";
 
-
 import Mongoose from "mongoose";
 import configModels from "./Models";
 
@@ -22,8 +21,7 @@ function startMongoose() {
       return;
     }
 
-    Mongoose
-      .connect(_url, _dbConfig)
+    Mongoose.connect(_url, _dbConfig)
       .then((instance) => {
         _mongooseInstance = instance;
         configModels(_mongooseInstance);
@@ -33,4 +31,7 @@ function startMongoose() {
   });
 }
 
+const databaseUrl = _url;
+
 export default startMongoose;
+export { databaseUrl };
