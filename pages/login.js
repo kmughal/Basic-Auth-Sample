@@ -1,18 +1,43 @@
 import React from "react";
 export default function () {
-  const [data, setData] = React.useState([]);
+  const userInput = React.useRef(null);
+  const passwordInput = React.useRef(null);
 
-  React.useEffect(() => {
-    fetch("http://localhost:3000/api/khurram/34")
-    .then(r => r.json())
-      .then(setData)
+  const handleFormSubmit = (e) => {
+    window
+      .fetch("http://localhost:3000/api/auth", {
+        method: "post",
+        credentials: "same-origin",
+        body: JSON.stringify({
+          username: userInput.current.value,
+          password: passwordInput.current.value,
+        }),
+        headers: [{ "contnet-type": "application/json" }],
+      })
+      .then((response) => response.json())
+      .then(console.log)
       .catch(console.trace);
-  }, []);
+    e.preventDefault();
+  };
 
   return (
-    <div>
-      <h1>Hello World</h1>
-      <pre>{JSON.stringify(data)}</pre>
-    </div>
+    <form onSubmit={handleFormSubmit}>
+      <div>
+        <label htmlFor="username">Username:</label>
+        <input type="text" id="username" name="username" ref={userInput} />
+      </div>
+      <div>
+        <label htmlFor="password">Username:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          ref={passwordInput}
+        />
+      </div>
+      <div>
+        <button>Sign in</button>
+      </div>
+    </form>
   );
 }
