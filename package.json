@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prestart": "NEXTAUTH_URL=http://localhost:3000",
     "start": "next dev"
   },
   "keywords": [],

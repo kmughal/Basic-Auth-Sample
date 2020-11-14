@@ -1,8 +1,11 @@
-import UserSchema from "../Schemas/UserSchema";
+import mongoose from "mongoose"
 
-let UserModel = null;
-export default function (instance) {
-  if (!UserModel) UserModel = instance.model("UserSchema", UserSchema);
+import UserSchema from "../Schemas/UserSchema"
+
+let UserModel = mongoose.models.UserSchema ?? mongoose.model("UserSchema", UserSchema)
+export default function() {
+  if(UserModel) return;
+  UserModel = mongoose.models.UserSchema ?? mongoose.model("UserSchema", UserSchema)
 }
 
-export { UserModel };
+export { UserModel }

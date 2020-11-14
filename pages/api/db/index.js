@@ -24,7 +24,7 @@ function startMongoose() {
     Mongoose.connect(_url, _dbConfig)
       .then((instance) => {
         _mongooseInstance = instance;
-        configModels(_mongooseInstance);
+        configModels();
         resolve(_mongooseInstance);
       })
       .catch(reject);

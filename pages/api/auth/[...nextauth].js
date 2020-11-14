@@ -28,13 +28,11 @@ const options = {
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        // await db.default();
-
+        await db.default();
         const existingUser = await UserModel.findOne({
           username: credentials.username,
         });
         if (await verify(existingUser.password, credentials.password)) {
-          console.log(existingUser.toObject());
           return { name: existingUser.username };
         }
         return null;
