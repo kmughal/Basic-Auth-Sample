@@ -12,8 +12,13 @@ export default function () {
         password: passwordInput.current.value,
       }),
       headers: { "CONTENT-TYPE": "application/json" },
-    }).then((response) => response.json())
-   
+    })
+      .then((response) => {
+        if (response.ok) {
+          window.location.replace("/login")
+        }
+      });
+
     e.preventDefault()
   }
 
@@ -26,8 +31,7 @@ export default function () {
           name="username"
           ref={userInput}
           placeholder="test@123.com"
-        />
-       {" "}
+        />{" "}
         <input
           type="password"
           id="password"
@@ -35,7 +39,12 @@ export default function () {
           ref={passwordInput}
           placeholder="123456789"
         />
-        <button className="register-container_action-button" onClick={handleFormSubmit}>Register</button>
+        <button
+          className="register-container_action-button"
+          onClick={handleFormSubmit}
+        >
+          Register
+        </button>
       </section>
     </section>
   )
