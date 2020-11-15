@@ -3,9 +3,14 @@
   src: url("./fonts/FiraSans-Light.ttf");
 }
 
+@font-face {
+  font-family: "FiraSans-Bold";
+  src: url("./fonts/FiraSans-ExtraBold.ttf");
+}
+
 body {
   font-family: "FiraSans-Light";
-  background: #414a4c;
+  background: #36393f;
   color: white;
 }
 
@@ -15,20 +20,110 @@ body {
 
 .main-page {
   display: flex;
-  height: 92%;
-  width: 97%;
+  height: 95%;
+  width: 99%;
   position: absolute;
   margin: 0;
   padding: 0;
+  border-radius: 15px;
 }
 
 .main-page__side-menu {
   flex: 1;
   height: 100%;
-  background: #353839;
+  border-right: 0px dashed white;
+  background: rgb(47, 49, 54);
 }
 
 .main-page__main-body {
   flex: 3;
   height: 100%;
+}
+
+.ReactModal__Overlay--after-open {
+  background: rgba(0, 0, 0, 0.65) !important;
+}
+
+.ReactModal__Content--after-open {
+  background: #36393f !important;
+  border: none !important;
+}
+
+.projects-container {
+  list-style: none;
+}
+
+.projects-container li {
+  padding: 10px 10px;
+  color: rgb(142, 146, 151);
+}
+
+.projects-container li:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.login-container {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.login-container form,
+.signin-container {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.signin-container {
+  position: absolute;
+}
+
+h1 {
+  font-family: "FiraSans-Bold";
+  text-align: center;
+}
+
+.login-container form section h1,
+.signin-container p {
+  text-align: center;
+}
+
+.modal-conainer__action-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+input[type="text"] {
+  background: rgba(0, 0, 0, 0.1);
+  color: rgb(220, 221, 222);
+  height: 25px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+input[type="text"]:active {
+  background: rgb(114, 137, 218);
+}
+
+button {
+  color: #fff;
+  background-color: #7289da;
+  height: 38px;
+  min-width: 96px;
+  min-height: 38px;
+  border: 0;
+  margin: 2px 2px;
+  border-radius: 3px;
+}
+
+button.default {
+  background-color: transparent;
+  font-weight: bold;
+}
+
+.modal-container__show-modal-button {
+  min-width: 25px;
 }
