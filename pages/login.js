@@ -6,17 +6,19 @@ export default function Login({ csrfToken }) {
     <section className="login-container">
       <form method="post" action="/api/auth/callback/credentials">
         <section>
-        <h1>Sign-in</h1>
+          <h1>Sign-in</h1>
           <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-          <label htmlFor="username">
-            Username
-            <input name="username" type="text" placeholder="khurram@fake-server.com"/>
-          </label>
-          <label htmlFor="password">
-            Password
-            <input name="password" type="text" placeholder="12345678"/>
-          </label>
+          <input
+            name="username"
+            type="text"
+            placeholder="khurram@server.com"
+          />{" "}
+          <input name="password" type="password" placeholder="12345678" />
           <button type="submit">Sign in</button>
+          <br />
+          <p className="align-center">
+            In to register a new account <a href="/register">click here.</a>
+          </p>
         </section>
       </form>
     </section>

@@ -12,12 +12,11 @@ export default function () {
         password: passwordInput.current.value,
       }),
       headers: { "CONTENT-TYPE": "application/json" },
+    }).then((response) => {
+      if (response.ok) {
+        window.location.replace("/login")
+      }
     })
-      .then((response) => {
-        if (response.ok) {
-          window.location.replace("/login")
-        }
-      });
 
     e.preventDefault()
   }
@@ -25,12 +24,13 @@ export default function () {
   return (
     <section className="register-container">
       <section>
+      <h1>Create a new account</h1>
         <input
           type="text"
           id="username"
           name="username"
           ref={userInput}
-          placeholder="test@123.com"
+          placeholder="khurram@server.com"
         />{" "}
         <input
           type="password"
@@ -45,6 +45,10 @@ export default function () {
         >
           Register
         </button>
+        <br/>
+        <p className="align-center">
+            In to login to your new account <a href="/login">click here.</a>
+          </p>
       </section>
     </section>
   )
