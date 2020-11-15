@@ -1,10 +1,10 @@
 import SideBar from "./SideBar"
 import MainBody from "./MainBody"
 
-export default function MainPage({ username }) {
+export default function MainPage() {
   return (
     <section className="main-page">
-      <SideBar username={username}></SideBar>
+      <SideBar/>
       <MainBody></MainBody>
     </section>
   )

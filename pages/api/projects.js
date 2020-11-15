@@ -1,24 +1,25 @@
 import argon2 from "argon2"
 import { UserModel, ProjectModel } from "./db/Models"
 import startMongoose from "./db"
+import { getSession } from "next-auth/client"
 
 export default async function (req, res) {
   await startMongoose()
+  const { user } = await getSession({ req })
+  if (!user || !user._id) {
+    res.status(404)
+    return
+  }
 
   if (req.method === "POST") {
-    const { username, projectName } = req.body
-    if (!username || !projectName) {
+    const { projectName } = req.body
+    if (!projectName) {
       res.status(404)
       return
     }
 
-    const existingUser = await UserModel.findByUsername(username)
-    if (!existingUser) {
-      res.status(404)
-      return
-    }
     const instance = new ProjectModel()
-    instance.user = existingUser
+    instance.user = user._id
     instance.projectName = projectName
     instance.save()
     res.status(302).send("project created")
@@ -26,18 +27,7 @@ export default async function (req, res) {
   }
 
   if (req.method == "GET") {
-    const { username } = req.query
-    if (!username) {
-      res.status(404)
-      return
-    }
-    const existingUser = await UserModel.findByUsername(username)
-    if (!existingUser) {
-      res.status(404)
-      return
-    }
-
-    const result = await ProjectModel.find({ user: existingUser })
+    const result = await ProjectModel.find({ user: user._id })
     res.json(result ?? [])
     return
   }

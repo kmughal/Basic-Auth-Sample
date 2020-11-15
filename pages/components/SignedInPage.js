@@ -5,10 +5,10 @@ export default function SignedInPage({ session }) {
   return (
     <>
       <div className="sign-out-container">
-        Signed in as {session.user.name}{" "}
+        Signed in as {session.user.username}{" "}
         <button onClick={signOut}>Sign out</button>
       </div>
-      <MainPage username={session.user.name}></MainPage>
+      <MainPage/>
     </>
   )
 }

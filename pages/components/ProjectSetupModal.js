@@ -13,7 +13,7 @@ const customStyles = {
   },
 }
 
-export default function ProjectSetupModal({ username }) {
+export default function ProjectSetupModal() {
   
   const [modalIsOpen, setIsOpen] = React.useState(false)
   const projectNameRef = React.useRef(null)
@@ -39,7 +39,6 @@ export default function ProjectSetupModal({ username }) {
   function saveHandler() {
     const body = JSON.stringify({
       projectName: projectNameRef.current.value,
-      username,
     })
     fetch("/api/projects", {
       method: "POST",

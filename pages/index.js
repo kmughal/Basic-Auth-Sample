@@ -6,7 +6,7 @@ import SignIn from "./components/SignIn"
 
 export default function Page() {
   const [session, loading] = useSession()
-  
+  console.log(session,"session")
   return (
     <>
       {!session && <SignIn />}
