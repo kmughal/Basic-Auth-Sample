@@ -26,8 +26,19 @@ export default async function (req, res) {
   }
 
   if (req.method == "GET") {
-    const result = await ProjectModel.find({})
-    res.json(result)
+    const { username } = req.query
+    if (!username) {
+      res.status(404)
+      return
+    }
+    const existingUser = await UserModel.findByUsername(username)
+    if (!existingUser) {
+      res.status(404)
+      return
+    }
+
+    const result = await ProjectModel.find({ user: existingUser })
+    res.json(result ?? [])
     return
   }
 }
