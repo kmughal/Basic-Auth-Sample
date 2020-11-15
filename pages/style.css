@@ -50,7 +50,8 @@ body {
 }
 
 .projects-container {
-  list-style: none;
+  padding: 0;
+  list-style-type: none;
 }
 
 .projects-container li {
@@ -70,7 +71,8 @@ body {
 }
 
 .login-container form,
-.signin-container {
+.signin-container,
+.register-container {
   display: grid;
   place-items: center;
   height: 100%;
@@ -96,7 +98,8 @@ h1 {
   justify-content: flex-end;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="password"] {
   background: rgba(0, 0, 0, 0.1);
   color: rgb(220, 221, 222);
   height: 25px;
@@ -104,19 +107,21 @@ input[type="text"] {
   border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
-input[type="text"]:active {
+input[type="text"]:active,
+input[type="password"]:active {
   background: rgb(114, 137, 218);
 }
 
 button {
   color: #fff;
   background-color: #7289da;
-  height: 38px;
   min-width: 96px;
-  min-height: 38px;
   border: 0;
   margin: 2px 2px;
   border-radius: 3px;
+  height: 30px;
+  min-height: 30px;
+  margin-left: 5px;
 }
 
 button.default {
@@ -126,4 +131,24 @@ button.default {
 
 .modal-container__show-modal-button {
   min-width: 25px;
+}
+
+a {
+  color: white;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.register-container_action-button {
+  height: 30px;
+  min-height: 30px;
+  margin-left: 5px;
+}
+
+#__next {
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
