@@ -64,6 +64,11 @@ body {
   cursor: pointer;
 }
 
+.projects-container li.selected {
+  color: white;
+  font-weight: bold;
+}
+
 .login-container {
   height: 100%;
   width: 100%;
@@ -154,5 +159,46 @@ a {
 }
 
 .align-center {
-  text-align:center;
+  text-align: center;
+}
+
+.main-page__main-body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-page__channel-history {
+  border: 1px solid rgb(47, 49, 54);
+  flex: 20;
+  margin-bottom: 5px;
+  border-radius: 15px;
+}
+
+.main-page__input-text {
+  flex: 1;
+}
+
+.main-page__input-text div {
+  display: flex;
+}
+
+.main-page__input-text div input[type="text"] {
+  flex: 3;
+}
+
+.message-container {
+  padding: 0;
+  list-style-type: none;
+}
+
+.message-container li {
+  border-radius:10px;
+  padding:10px 10px;
+  margin: 10px 10px;
+}
+
+.message-container__not-author {
+  background-color: #7289da;
+  text-align: right;
 }

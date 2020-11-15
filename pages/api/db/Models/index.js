@@ -1,19 +1,29 @@
 import mongoose from "mongoose"
 
 import UserSchema from "../Schemas/UserSchema"
-import ProjectSchema from "../Schemas/ProjectSchema"
+import ChannelSchema from "../Schemas/ChannelSchema"
+import MessagesSchema from "../Schemas/MessagesSchema"
 
 let UserModel =
   mongoose.models.UserSchema ?? mongoose.model("UserSchema", UserSchema)
-let ProjectModel =
-  mongoose.models.ProjectSchema ??
-  mongoose.model("ProjectSchema", ProjectSchema)
+let ChannelModel =
+  mongoose.models.ChannelSchema ??
+  mongoose.model("ChannelSchema", ChannelSchema)
+let MessageModel =
+  mongoose.models.MessagesSchema ??
+  mongoose.model("MessagesSchema", MessagesSchema)
+
 export default function () {
   if (UserModel) return
   UserModel =
     mongoose.models.UserSchema ?? mongoose.model("UserSchema", UserSchema)
-    ProjectModel =
-    mongoose.models.ProjectModel ?? mongoose.model("ProjectModel", ProjectModel)
+    
+  ChannelModel =
+    mongoose.models.ChannelSchema ??
+    mongoose.model("ChannelSchema", ChannelSchema)
+
+  MessageModel =
+    mongoose.models.MessageModel ?? mongoose.model("MessageModel", MessageModel)
 }
 
-export { UserModel, ProjectModel }
+export { UserModel, ChannelModel, MessageModel }

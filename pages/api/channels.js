@@ -1,7 +1,6 @@
-import argon2 from "argon2"
-import { UserModel, ProjectModel } from "./db/Models"
-import startMongoose from "./db"
 import { getSession } from "next-auth/client"
+import { ChannelModel } from "./db/Models"
+import startMongoose from "./db"
 
 export default async function (req, res) {
   await startMongoose()
@@ -12,22 +11,21 @@ export default async function (req, res) {
   }
 
   if (req.method === "POST") {
-    const { projectName } = req.body
-    if (!projectName) {
-      res.status(404)
+    const { channelName } = req.body
+    if (!channelName) {
+      res.status(404).send("Bad request")
       return
     }
-
-    const instance = new ProjectModel()
+    const instance = new ChannelModel()
     instance.user = user._id
-    instance.projectName = projectName
+    instance.channelName = channelName
     instance.save()
-    res.status(302).send("project created")
+    res.status(302).send("Channel created!")
     return
   }
 
   if (req.method == "GET") {
-    const result = await ProjectModel.find({ user: user._id })
+    const result = await ChannelModel.find({  })
     res.json(result ?? [])
     return
   }

@@ -8,7 +8,7 @@ export default function SignedInPage({ session }) {
         Signed in as {session.user.username}{" "}
         <button onClick={signOut}>Sign out</button>
       </div>
-      <MainPage/>
+      <MainPage username={session.user.username}/>
     </>
   )
 }

@@ -16,7 +16,7 @@ const customStyles = {
 export default function ProjectSetupModal() {
   
   const [modalIsOpen, setIsOpen] = React.useState(false)
-  const projectNameRef = React.useRef(null)
+  const channelNameRef = React.useRef(null)
 
   React.useEffect(() => {
     Modal.setAppElement("#__next")
@@ -37,10 +37,11 @@ export default function ProjectSetupModal() {
   }
 
   function saveHandler() {
+    debugger;
     const body = JSON.stringify({
-      projectName: projectNameRef.current.value,
+      channelName: channelNameRef.current.value,
     })
-    fetch("/api/projects", {
+    fetch("/api/channels", {
       method: "POST",
       body,
       headers: { "content-type": "application/json" },
@@ -66,7 +67,7 @@ export default function ProjectSetupModal() {
             <label htmlFor="project-name">Channel Name</label>
             # <input
               type="text"
-              ref={projectNameRef}
+              ref={channelNameRef}
               name="project-name"
               placeholder="Test project"
             />
