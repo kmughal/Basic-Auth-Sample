@@ -1,11 +1,10 @@
-import React from "react";
+import React from "react"
 
 export default function () {
-  const userInput = React.useRef(null);
-  const passwordInput = React.useRef(null);
+  const userInput = React.useRef(null)
+  const passwordInput = React.useRef(null)
 
   const handleFormSubmit = async (e) => {
-    
     const response = await fetch("/api/register", {
       method: "POST",
       body: JSON.stringify({
@@ -13,29 +12,31 @@ export default function () {
         password: passwordInput.current.value,
       }),
       headers: { "CONTENT-TYPE": "application/json" },
-    }).then((response) => response.json());
-    console.log(response);
-    e.preventDefault();
-  };
+    }).then((response) => response.json())
+   
+    e.preventDefault()
+  }
 
   return (
-    <div>
-      <div>
-        <label htmlFor="username">Username:</label>
-        <input type="text" id="username" name="username" ref={userInput} />
-      </div>
-      <div>
-        <label htmlFor="password">Password:</label>
+    <section className="register-container">
+      <section>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          ref={userInput}
+          placeholder="test@123.com"
+        />
+       {" "}
         <input
           type="password"
           id="password"
           name="password"
           ref={passwordInput}
+          placeholder="123456789"
         />
-      </div>
-      <div>
-        <button onClick={handleFormSubmit}>Register</button>
-      </div>
-    </div>
-  );
+        <button className="register-container_action-button" onClick={handleFormSubmit}>Register</button>
+      </section>
+    </section>
+  )
 }
