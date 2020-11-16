@@ -5,29 +5,33 @@ import MainBody from "./MainBody";
 export default function MainPage({ username }) {
   const [selectedChannel, setSelectedChannel] = React.useState(null);
   const [messages, setMessages] = React.useState(null);
-  function getMessagesByChannel(id) {
-    if (!(id ?? selectedChannel)) return;
-    fetch("/api/messages?channelId=" + (id ?? selectedChannel))
-      .then((r) => r.json())
-      .then(setMessages)
-      .catch(console.error);
-  }
 
-  // Long polling this needs to change.
-  // setTimeout(() => {
-  //   getMessagesByChannel();
-  // }, 3000);
+
+  React.useEffect(() => {
+    console.log(selectedChannel, "selectedchannel")
+    if (!selectedChannel) return;
+    const url = "http://localhost:5000/messages?channelId=" + (selectedChannel);
+    const eventSource = new EventSource(url);
+
+    eventSource.onmessage = (data) => {
+      const messages = JSON.parse(data.data);
+      setMessages(messages?.messages)
+    };
+
+    eventSource.addEventListener("ping", (data) => {
+      console.log(data);
+    });
+  },[selectedChannel])
+
 
   return (
     <section className="main-page">
       <SideBar
         setSelectedChannel={setSelectedChannel}
-        getMessagesByChannel={getMessagesByChannel}
       />
       <MainBody
         selectedChannel={selectedChannel}
         messages={messages}
-        getMessagesByChannel={getMessagesByChannel}
         username={username}
       ></MainBody>
     </section>

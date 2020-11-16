@@ -1,8 +1,8 @@
-import React from "react"
-import ProjectSetupModal from "./ProjectSetupModal"
+import React from "react";
+import ProjectSetupModal from "./ProjectSetupModal";
 
-export default function SideBar({ setSelectedChannel, getMessagesByChannel }) {
-  const [channels, setChannels] = React.useState(null)
+export default function SideBar({ setSelectedChannel }) {
+  const [channels, setChannels] = React.useState(null);
 
   React.useEffect(() => {
     fetch("/api/channels", {
@@ -11,17 +11,16 @@ export default function SideBar({ setSelectedChannel, getMessagesByChannel }) {
     })
       .then((r) => r.json())
       .then(setChannels)
-      .catch(console.error)
-  }, [])
+      .catch(console.error);
+  }, []);
 
   const setChannelId = (id, e) => {
     document
       .querySelectorAll(".projects-container li")
-      .forEach((i) => i.classList.remove("selected"))
-    e.target.classList.add("selected")
-    setSelectedChannel(id)
-    getMessagesByChannel(id)
-  }
+      .forEach((i) => i.classList.remove("selected"));
+    e.target.classList.add("selected");
+    setSelectedChannel(id);
+  };
 
   return (
     <>
@@ -39,5 +38,5 @@ export default function SideBar({ setSelectedChannel, getMessagesByChannel }) {
         )}
       </div>
     </>
-  )
+  );
 }

@@ -5,13 +5,14 @@ import MessagesSchema from "./db/Schemas/MessagesSchema"
 
 export default async function (req, res) {
   await startMongoose()
-  const { user } = await getSession({ req })
-  if (!user || !user._id) {
-    res.status(404)
-    return
-  }
+ 
 
   if (req.method === "POST") {
+    const { user } = await getSession({ req })
+    if (!user || !user._id) {
+      res.status(404)
+      return
+    }
     const { channelId, message } = req.body
 
     if (!channelId || !message) {

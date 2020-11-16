@@ -1,5 +1,6 @@
 import Express from "express";
 import bodyParser from "body-parser";
+import { getMessagesCollection } from "./db.js";
 
 const app = Express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -14,15 +15,13 @@ app.use((req, res, next) => {
   next();
 });
 
-const clients = [];
+let clients = [];
 
-app.get("/messages", (req, res) => {
-  const {channelId} = req.query;
-  if (!channelId) return res.status(500).send("Channel Id is required for live updates!");
-
-  // const result = await MessageModel.find({
-  //   channel: channelId,
-  // }).populate("user", "username")
+app.get("/messages", async (req, res) => {
+  const { channelId } = req.query;
+  console.log(req.params, req.query);
+  if (!channelId)
+    return res.status(500).send("Channel Id is required for live updates!");
 
   const headers = {
     "Content-Type": "text/event-stream",
@@ -30,11 +29,16 @@ app.get("/messages", (req, res) => {
     "Cache-Control": "no-cache",
   };
 
+  const messagesCollection = await getMessagesCollection();
+  const messages = await messagesCollection
+    .find({ channel: channelId })
+    .toArray();
+  console.log("messages :", messages);
   res.writeHead(200, headers);
   startLiveUpdatesForBus(res);
 
   let response = {
-    counter: counter++,
+    messages,
     dateString: new Date().toString(),
   };
 
@@ -63,12 +67,14 @@ function addClient(res) {
 }
 
 function startLiveUpdatesForBus(_) {
-  setInterval(() => getNewResponseAndNotifyAllClients(), 3000);
+  setInterval(() => getNewResponseAndNotifyAllClients(), 10000);
 }
 
-function getNewResponseAndNotifyAllClients() {
+async function getNewResponseAndNotifyAllClients() {
+  const messagesCollection = await getMessagesCollection();
+  const messages = await messagesCollection.find({}).toArray();
   let response = {
-    counter: counter++,
+    messages,
     dateString: new Date().toString(),
   };
   console.log("sending message to :", clients.length);
