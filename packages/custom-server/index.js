@@ -31,7 +31,7 @@ app.get("/messages", async (req, res) => {
     "Cache-Control": "no-cache",
   };
 
-  const messages = await getMessagesByChannelId(channelId);
+  const messages =[ ];//await getMessagesByChannelId(channelId)];
   res.writeHead(200, headers);
   startLiveUpdates(channelId);
  console.log(messages)
@@ -83,10 +83,12 @@ async function getNewResponseAndNotifyAllClients(channelId) {
     messages,
     dateString: new Date().toString(),
   };
-  console.log("sending message to :", clients.length);
-  clients
-    .filter((c) => c.channelId === channelId)
-    .forEach((c) => c.res.write(`data: ${JSON.stringify(response)}\n\n`));
+  console.log("Channel Id:" ,channelId);
+  console.log("Total Clients:", clients.length);
+  const filteredClientsByChannel =  clients
+  .filter((c) => c.channelId === channelId);
+  console.log("filteredClientsByChannel :", filteredClientsByChannel.length);
+  filteredClientsByChannel.forEach((c) => c.res.write(`data: ${JSON.stringify(response)}\n\n`));
 }
 
 const port = process.env.PORT || 5000;

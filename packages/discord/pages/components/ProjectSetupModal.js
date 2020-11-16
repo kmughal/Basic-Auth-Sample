@@ -37,7 +37,6 @@ export default function ProjectSetupModal() {
   }
 
   function saveHandler() {
-    debugger;
     const body = JSON.stringify({
       channelName: channelNameRef.current.value,
     })
