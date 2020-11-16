@@ -5,8 +5,8 @@ import MainBody from "./MainBody"
 export default function MainPage({username}) {
   const [selectedChannel, setSelectedChannel] = React.useState(null)
   const [messages, setMessages] = React.useState(null)
-  function getMessagesByChannel() {
-    fetch("/api/messages?channelId=" + selectedChannel)
+  function getMessagesByChannel(id) {
+    fetch("/api/messages?channelId=" + (id ?? selectedChannel) )
       .then((r) => r.json())
       .then(setMessages)
       .catch(console.error)

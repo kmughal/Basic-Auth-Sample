@@ -20,7 +20,7 @@ export default function SideBar({ setSelectedChannel, getMessagesByChannel }) {
       .forEach((i) => i.classList.remove("selected"))
     e.target.classList.add("selected")
     setSelectedChannel(id)
-    getMessagesByChannel()
+    getMessagesByChannel(id)
   }
 
   return (
