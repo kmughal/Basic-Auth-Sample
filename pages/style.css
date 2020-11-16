@@ -8,10 +8,30 @@
   src: url("./fonts/FiraSans-ExtraBold.ttf");
 }
 
+:root {
+  --font-color: white;
+  --background-color: #36393f;
+}
+
+
+@media (prefers-color-scheme: light) {
+  body {
+    --font-color: #36393f;
+    --background-color: white;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    --font-color: white;
+    --background-color: #36393f;
+  }
+}
+
 body {
   font-family: "FiraSans-Light";
-  background: #36393f;
-  color: white;
+  background: var(--background-color);
+  color: var(--font-color);
 }
 
 .sign-out-container {
@@ -193,8 +213,8 @@ a {
 }
 
 .message-container li {
-  border-radius:10px;
-  padding:10px 10px;
+  border-radius: 10px;
+  padding: 10px 10px;
   margin: 10px 10px;
 }
 
