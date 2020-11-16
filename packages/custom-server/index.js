@@ -1,7 +1,7 @@
-const Express = require("express");
-const bodyParser = require("body-parser");
-const app = Express();
+import Express from "express";
+import bodyParser from "body-parser";
 
+const app = Express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
@@ -15,8 +15,15 @@ app.use((req, res, next) => {
 });
 
 const clients = [];
-let counter = 0;
+
 app.get("/messages", (req, res) => {
+  const {channelId} = req.query;
+  if (!channelId) return res.status(500).send("Channel Id is required for live updates!");
+
+  // const result = await MessageModel.find({
+  //   channel: channelId,
+  // }).populate("user", "username")
+
   const headers = {
     "Content-Type": "text/event-stream",
     Connection: "keep-alive",
