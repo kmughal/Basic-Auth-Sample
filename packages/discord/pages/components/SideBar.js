@@ -1,7 +1,7 @@
 import React from "react";
 import ProjectSetupModal from "./ProjectSetupModal";
 
-export default function SideBar({ setSelectedChannel }) {
+export default function SideBar({ setSelectedChannel, eventSource }) {
   const [channels, setChannels] = React.useState(null);
 
   React.useEffect(() => {
@@ -19,6 +19,10 @@ export default function SideBar({ setSelectedChannel }) {
       .querySelectorAll(".projects-container li")
       .forEach((i) => i.classList.remove("selected"));
     e.target.classList.add("selected");
+    debugger;
+    if (eventSource?.close) {
+      eventSource.close();
+    }
     setSelectedChannel(id);
   };
 

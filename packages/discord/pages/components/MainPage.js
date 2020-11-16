@@ -6,12 +6,17 @@ export default function MainPage({ username }) {
   const [selectedChannel, setSelectedChannel] = React.useState(null);
   const [messages, setMessages] = React.useState(null);
 
-
+  let eventSource = null;
   React.useEffect(() => {
-    console.log(selectedChannel, "selectedchannel")
+  
     if (!selectedChannel) return;
+   
+    if (eventSource?.close) {
+      console.log("closing");
+      eventSource.close();
+    }
     const url = "http://localhost:5000/messages?channelId=" + (selectedChannel);
-    const eventSource = new EventSource(url);
+    eventSource = new EventSource(url);
 
     eventSource.onmessage = (data) => {
       const messages = JSON.parse(data.data);
@@ -28,6 +33,7 @@ export default function MainPage({ username }) {
     <section className="main-page">
       <SideBar
         setSelectedChannel={setSelectedChannel}
+        eventSource={eventSource}
       />
       <MainBody
         selectedChannel={selectedChannel}
