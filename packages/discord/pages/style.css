@@ -13,7 +13,6 @@
   --background-color: #36393f;
 }
 
-
 @media (prefers-color-scheme: light) {
   body {
     --font-color: #36393f;
@@ -221,4 +220,32 @@ a {
 .message-container__not-author {
   background-color: #7289da;
   text-align: right;
+}
+
+.editor-toolbar {
+  position: absolute;
+  background: black;
+  color: rgb(142, 146, 151);
+  width: 200px;
+  border: 1px solid rgb(47, 49, 54);
+  border-radius: 10px;
+}
+
+.editor-toolbar ul {
+  padding: 0;
+  list-style-type: none;
+  text-align: left;
+}
+
+.editor-toolbar ul li:hover {
+  color: white;
+}
+
+.editor-toolbar ul li {
+  padding: 10px 10px;
+  cursor: pointer;
+}
+
+.editor-toolbar_action-delete {
+  color: red!important;
 }
