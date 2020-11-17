@@ -31,7 +31,7 @@ app.get("/messages", async (req, res) => {
     "Cache-Control": "no-cache",
   };
 
-  const messages =[ ];//await getMessagesByChannelId(channelId)];
+  const messages = await getMessagesByChannelId(channelId);
   res.writeHead(200, headers);
   startLiveUpdates(channelId);
  console.log(messages)
