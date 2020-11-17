@@ -32,7 +32,7 @@ export default function Messages({ messages, username }) {
             key={m._id}
             onMouseOver={(e) => showEditorToolBar(m, e)}
           >
-            {m.user.username} say :{m.message}
+            {m.user.username} say :<span className="message-container__text">{m.message}</span>
           </li>
         ))}
       </ul>

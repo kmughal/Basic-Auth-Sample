@@ -222,16 +222,13 @@ a {
   text-align: right;
 }
 
-.editor-toolbar {
+.editor-toolbar ul {
   position: absolute;
   background: black;
   color: rgb(142, 146, 151);
   width: 200px;
   border: 1px solid rgb(47, 49, 54);
   border-radius: 10px;
-}
-
-.editor-toolbar ul {
   padding: 0;
   list-style-type: none;
   text-align: left;
@@ -247,5 +244,5 @@ a {
 }
 
 .editor-toolbar_action-delete {
-  color: red!important;
+  color: red !important;
 }
