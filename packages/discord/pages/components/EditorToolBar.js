@@ -12,7 +12,7 @@ export default function EditorToolBar({ editorToolBar }) {
       .catch(console.trace);
   };
 
-  const editMessageHandler = (event) => {
+  const updateMessageHandler = (event) => {
     const body = JSON.stringify({
       messageId: editorToolBar.current._id,
       message: document.getElementById("edit_message").value,
@@ -39,7 +39,7 @@ export default function EditorToolBar({ editorToolBar }) {
     parentEl.innerHTML = `
     <form>
       <input id='edit_message' type='text' value="${message}"/>
-      <button onClick=${editMessageHandler}>Save</button>
+      <button onClick=${updateMessageHandler}>Save</button>
       <button>Cancel</button>
     </form>
     `;
