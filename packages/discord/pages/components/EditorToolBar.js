@@ -14,16 +14,17 @@ export default function EditorToolBar({ editorToolBar }) {
 
   const updateMessageHandler = (event) => {
     const body = JSON.stringify({
-      messageId: editorToolBar.current._id,
+      messageId: editorToolBar.current.data._id,
       message: document.getElementById("edit_message").value,
     });
-
+    
     fetch("/api/messages", {
       method: "PUT",
       body,
       headers: { "content-type": "application/json" },
     })
       .then(r => {
+       
         if (r.ok) {
           // remove the text editor
         }
@@ -37,12 +38,14 @@ export default function EditorToolBar({ editorToolBar }) {
     const message = parentEl.querySelector(".message-container__text")
       .innerHTML;
     parentEl.innerHTML = `
-    <form>
+    <div>
       <input id='edit_message' type='text' value="${message}"/>
-      <button onClick=${updateMessageHandler}>Save</button>
+      <button id='edit_message--save-button'>Save</button>
       <button>Cancel</button>
-    </form>
+    </div>
     `;
+    document.getElementById("edit_message--save-button")
+    .addEventListener("click",updateMessageHandler);
   };
 
   return (

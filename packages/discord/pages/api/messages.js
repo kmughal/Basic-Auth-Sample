@@ -56,5 +56,25 @@ export default async function (req, res) {
     });
 
     res.status(204).send("message deleted" + messageId);
+  } else if (req.method == "PUT") {
+    const { messageId, message } = req.body;
+    if (!messageId && !message) {
+      res.status(404).send("Bad request");
+      return;
+    }
+    const existingMessage = await MessageModel.findOne({ _id: messageId });
+    const isOwner = user._id !== existingMessage.user;
+    if (!isOwner) {
+      res.status(404).send("Bad request");
+      return;
+    }
+
+    await MessageModel.updateOne(
+      { _id: { $eq: messageId } },
+      { message: message },
+      { upsert: true }
+    );
+
+    res.status(204).send("message updated" + messageId);
   }
 }
