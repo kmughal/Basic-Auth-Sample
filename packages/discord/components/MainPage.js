@@ -3,14 +3,14 @@ import SideBar from "./SideBar";
 import MainBody from "./MainBody";
 import useSSE from "../hooks/useSSE";
 
-export default function MainPage({ username }) {
-  const [selectedChannel, setSelectedChannel] = React.useState(null);
+export default function MainPage({ username,channels,selectedChannelId }) {
+  const [selectedChannel, setSelectedChannel] = React.useState(selectedChannelId);
   const [messages, setMessages] = React.useState(null);
   useSSE(selectedChannel, setMessages);
 
   return (
     <section className="main-page">
-      <SideBar setSelectedChannel={setSelectedChannel} />
+      <SideBar channels={channels} setSelectedChannel={setSelectedChannel} />
       <MainBody
         selectedChannel={selectedChannel}
         messages={messages}

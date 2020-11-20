@@ -1,6 +1,6 @@
 import Express from "express";
 import bodyParser from "body-parser";
-import { MessageModel } from "./db/Models/index.js";
+import { MessageModel, ChannelModel } from "./db/Models/index.js";
 import startMongoose from "./db/index.js";
 
 const app = Express();
@@ -18,8 +18,14 @@ app.use((req, res, next) => {
 
 let clients = [];
 
+app.get("/channels", async (req, res) => {
+  // await startMongoose();
+  const result = await ChannelModel.find({});
+  res.json(result ?? []).status(200);
+});
+
 app.get("/messages", async (req, res) => {
-  await startMongoose();
+  // await startMongoose();
   const { channelId } = req.query;
 
   if (!channelId)
@@ -34,7 +40,7 @@ app.get("/messages", async (req, res) => {
   const messages = await getMessagesByChannelId(channelId);
   res.writeHead(200, headers);
   startLiveUpdates(channelId);
- console.log(messages)
+  console.log(messages);
   let response = {
     messages,
     dateString: new Date().toString(),
@@ -70,7 +76,6 @@ function startLiveUpdates(channelId) {
 }
 
 async function getMessagesByChannelId(channelId) {
- 
   const messages = await MessageModel.find({
     channel: channelId,
   }).populate("user", "username");
@@ -83,13 +88,19 @@ async function getNewResponseAndNotifyAllClients(channelId) {
     messages,
     dateString: new Date().toString(),
   };
-  console.log("Channel Id:" ,channelId);
+  console.log("Channel Id:", channelId);
   console.log("Total Clients:", clients.length);
-  const filteredClientsByChannel =  clients
-  .filter((c) => c.channelId === channelId);
+  const filteredClientsByChannel = clients.filter(
+    (c) => c.channelId === channelId
+  );
   console.log("filteredClientsByChannel :", filteredClientsByChannel.length);
-  filteredClientsByChannel.forEach((c) => c.res.write(`data: ${JSON.stringify(response)}\n\n`));
+  filteredClientsByChannel.forEach((c) =>
+    c.res.write(`data: ${JSON.stringify(response)}\n\n`)
+  );
 }
 
 const port = process.env.PORT || 5000;
-app.listen(port, () => console.log("Custom server opened :", port));
+app.listen(port, async () => {
+  await startMongoose();
+  console.log("Custom server opened :", port);
+});

@@ -1,11 +1,11 @@
 @font-face {
   font-family: "FiraSans-Light";
-  src: url("./fonts/FiraSans-Light.ttf");
+  src: url("../fonts/FiraSans-Light.ttf");
 }
 
 @font-face {
   font-family: "FiraSans-Bold";
-  src: url("./fonts/FiraSans-ExtraBold.ttf");
+  src: url("../fonts/FiraSans-ExtraBold.ttf");
 }
 
 :root {
@@ -245,4 +245,32 @@ a {
 
 .editor-toolbar_action-delete {
   color: red !important;
+}
+
+.message-editor {
+  position: absolute;
+  background: black;
+  border: 1px solid  #36393f;
+  border-radius: 10px;
+  margin: 10px 10px;
+  width: 250px;
+}
+
+.message-editor ul {
+  background: black;
+  color: rgb(142, 146, 151);
+  width: 200px;
+  border: 1px solid rgb(47, 49, 54);
+  border-radius: 10px;
+  padding: 0;
+  list-style-type: none;
+  text-align: left;
+}
+
+.message-editor__open-button {
+  cursor: pointer;
+}
+
+.message-editor__open-button:hover {
+  color: white;
 }
