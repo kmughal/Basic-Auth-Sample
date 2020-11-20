@@ -35,8 +35,11 @@ export default function SideBar({
         {channels && channels.length > 0 && (
           <ul className="projects-container">
             {channels.map((p) => (
-              <li onClick={(e) => setChannelId(p._id, e)} key={p._id}>
-                {p.channelName}
+              // <li onClick={(e) => setChannelId(p._id, e)} key={p._id}>
+              //   {p.channelName}
+              // </li>
+              <li key={p._id}>
+                <a href={`/channels/${p._id}`}> {p.channelName}</a>
               </li>
             ))}
           </ul>

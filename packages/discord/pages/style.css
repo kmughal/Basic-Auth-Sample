@@ -250,7 +250,7 @@ a {
 .message-editor {
   position: absolute;
   background: black;
-  border: 1px solid  #36393f;
+  border: 1px solid #36393f;
   border-radius: 10px;
   margin: 10px 10px;
   width: 250px;
@@ -273,4 +273,17 @@ a {
 
 .message-editor__open-button:hover {
   color: white;
+}
+
+.welcome-page-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  place-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.welcome-page-container * {
+  text-align: center;
 }
