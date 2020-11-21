@@ -78,7 +78,7 @@ function MessageEditor({ message, messageId, channelId }) {
             Edit
           </li>
           <DeleteMessageButton messageId={messageId} />
-          <UploadFile />
+        
         </ul>
       </section>
     </div>
