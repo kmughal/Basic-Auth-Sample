@@ -222,7 +222,7 @@ a {
   text-align: right;
 }
 
-.editor-toolbar ul {
+.editor-menu ul {
   position: absolute;
   background: black;
   color: rgb(142, 146, 151);
@@ -234,16 +234,16 @@ a {
   text-align: left;
 }
 
-.editor-toolbar ul li:hover {
+.editor-menu ul li:hover {
   color: white;
 }
 
-.editor-toolbar ul li {
+.editor-menu ul li {
   padding: 10px 10px;
   cursor: pointer;
 }
 
-.editor-toolbar_action-delete {
+.editor-menu_action-delete {
   color: red !important;
 }
 
@@ -286,4 +286,12 @@ a {
 
 .welcome-page-container * {
   text-align: center;
+}
+
+.hide-block {
+  display: none;
+}
+
+.upload-file-ref {
+  display: none;
 }

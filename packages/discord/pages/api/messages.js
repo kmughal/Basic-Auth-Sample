@@ -3,27 +3,34 @@ import startMongoose from "./db";
 import { getSession } from "next-auth/client";
 
 export default async function (req, res) {
+
   await startMongoose();
+  
   const { user } = await getSession({ req });
   if (!user || !user._id) {
     res.status(404);
     return;
   }
+  
   if (req.method === "POST") {
-    const { channelId, message } = req.body;
+    const { channelId, message, messageType } = req.body;
 
-    if (!channelId || !message) {
+    if (!channelId || !message || !messageType) {
       res.status(404);
       return;
     }
+    console.log({ channelId, message, messageType });
     const instance = new MessageModel();
     instance.user = user._id;
     instance.channel = channelId;
     instance.message = message;
+    instance.messageType = messageType;
     instance.save();
     res.status(302).send("message added to the selected channel");
     return;
-  } else if (req.method == "GET") {
+  } 
+  
+  else if (req.method == "GET") {
     const { channelId } = req.query;
 
     if (!channelId) {
@@ -36,7 +43,9 @@ export default async function (req, res) {
     }).populate("user", "username");
 
     res.json(result ?? []);
-  } else if (req.method == "DELETE") {
+  } 
+  
+  else if (req.method == "DELETE") {
     const { messageId } = req.body;
 
     if (!messageId) {
@@ -56,7 +65,9 @@ export default async function (req, res) {
     });
 
     res.status(204).send("message deleted" + messageId);
-  } else if (req.method == "PUT") {
+  } 
+  
+  else if (req.method == "PUT") {
     const { messageId, message } = req.body;
     if (!messageId && !message) {
       res.status(404).send("Bad request");
