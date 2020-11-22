@@ -11,6 +11,7 @@
 :root {
   --font-color: white;
   --background-color: #36393f;
+  --background-modifier-accent:hsla(0.0%,100%,.0.6);
 }
 
 @media (prefers-color-scheme: light) {
@@ -52,6 +53,7 @@ body {
   height: 100%;
   border-right: 0px dashed white;
   background: rgb(47, 49, 54);
+  box-shadow: inset 0 -1px 0 var(--background-modifier-accent);
 }
 
 .main-page__main-body {
@@ -196,6 +198,8 @@ a {
 
 .main-page__input-text {
   flex: 1;
+  background: rgb(64, 68, 75);
+  border-radius: 5px;
 }
 
 .main-page__input-text div {
@@ -294,4 +298,14 @@ a {
 
 .upload-file-ref {
   display: none;
+}
+
+.main-page__input-text input[type="text"] {
+  border: none;
+  background: transparent;
+}
+
+.main-page__input-text button {
+  min-width: 4px;
+  background: rgb(64, 68, 75);
 }
