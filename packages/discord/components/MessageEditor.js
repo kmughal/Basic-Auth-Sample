@@ -6,7 +6,7 @@ function MessageEditor({ message, messageId, channelId }) {
   const [messageValue, setMessage] = React.useState(message);
 
   let editor = null;
-  let messageView = null;
+  let userMessage = null;
 
   const updateMessageHandler = () => {
     const body = JSON.stringify({
@@ -20,13 +20,13 @@ function MessageEditor({ message, messageId, channelId }) {
         const messageContainer =
           editor.parentElement.parentElement.parentElement;
         messageContainer
-          .querySelector(".message-view")
+          .querySelector( ".user-message")
           .classList.remove("hide-block");
         messageContainer
           .querySelector(".editor-container")
           .classList.add("hide-block");
         messageContainer.querySelector(
-          ".message-view .user-message"
+          ".user-message"
         ).innerHTML = messageValue;
       }
     }
@@ -75,10 +75,10 @@ function MessageEditor({ message, messageId, channelId }) {
               editor.classList.remove("hide-block");
               editorMenu.classList.add("hide-block");
 
-              messageView = editorContainer.parentElement.querySelector(
+              userMessage = editorContainer.parentElement.querySelector(
                 ".user-message"
               );
-              messageView.classList.add("hide-block");
+              userMessage.classList.add("hide-block");
             }}
           >
             Edit
