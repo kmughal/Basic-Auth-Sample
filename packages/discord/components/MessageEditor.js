@@ -1,4 +1,5 @@
 import React from "react";
+import DeleteMessageButton from "./DeleteMessageButton";
 
 function MessageEditor({ message, messageId, channelId }) {
   const [messageEditor, showMessageEditor] = React.useState(false);
@@ -7,7 +8,7 @@ function MessageEditor({ message, messageId, channelId }) {
   let editor = null;
   let messageView = null;
 
-  const updateMessageHandler = (event) => {
+  const updateMessageHandler = () => {
     const body = JSON.stringify({
       messageId,
       message: messageValue,
@@ -29,7 +30,7 @@ function MessageEditor({ message, messageId, channelId }) {
         ).innerHTML = messageValue;
       }
     }
-
+   
     fetch("/api/messages", {
       method: "PUT",
       body,
@@ -37,7 +38,6 @@ function MessageEditor({ message, messageId, channelId }) {
     })
       .then(doChangesAfterMessageUpdate)
       .catch(console.error);
-    event.preventDefault();
   };
   const cancelHandler = (e) => showMessageEditor(false);
 
@@ -51,9 +51,15 @@ function MessageEditor({ message, messageId, channelId }) {
           onChange={(e) => {
             setMessage(e.target.value);
           }}
+          onKeyDown={(e) => {
+            if (e.keyCode === 13) {
+              updateMessageHandler();
+              cancelHandler();
+            } else if (e.keyCode === 27) {
+              cancelHandler();
+            }
+          }}
         />
-        <button onClick={updateMessageHandler}>Save</button>
-        <button onClick={cancelHandler}>Cancel</button>
       </section>
 
       <section className="editor-menu">
@@ -70,7 +76,7 @@ function MessageEditor({ message, messageId, channelId }) {
               editorMenu.classList.add("hide-block");
 
               messageView = editorContainer.parentElement.querySelector(
-                ".message-view"
+                ".user-message"
               );
               messageView.classList.add("hide-block");
             }}
@@ -78,7 +84,6 @@ function MessageEditor({ message, messageId, channelId }) {
             Edit
           </li>
           <DeleteMessageButton messageId={messageId} />
-        
         </ul>
       </section>
     </div>
@@ -86,63 +91,3 @@ function MessageEditor({ message, messageId, channelId }) {
 }
 
 export default MessageEditor;
-
-function DeleteMessageButton({ messageId }) {
-  const deleteMessageHandler = async (e) => {
-    const response = await fetch("/api/messages", {
-      method: "DELETE",
-      headers: { "content-type": "application/json" },
-      credentials: "same-origin",
-      body: JSON.stringify({ messageId }),
-    });
-    if (response.ok) {
-      console.log("message with id:", messageId, " is deletd");
-    }
-  };
-
-  return <li onClick={deleteMessageHandler}>Delete</li>;
-}
-
-function UploadFile() {
-  const fileChangeHandler = (e) => {
-    const li = e.target.parentElement;
-    const files = e.target.files;
-    if (files && files.length === 0) return;
-
-    const firstFile = files[0];
-    const type = firstFile.type;
-    const isImage =
-      type === "image/gif" || type === "image/png" || type === "image/bmp";
-    if (isImage) {
-      // convert to base64 and store in mongo
-      const fr = new FileReader();
-      fr.onload = () => {
-        console.log(fr.result);
-        const body = JSON.stringify({ message: fs.result, messageType: type });
-
-        fetch("/api/messages", {
-          method: "POST",
-          body,
-          headers: { "Content-Type": "application/json" },
-        })
-          .then((response) => {
-            console.log(response);
-          })
-          .catch(console.trace);
-      };
-      fr.readAsDataURL(firstFile);
-    }
-  };
-
-  const uploadFileHandler = (e) => {
-    const li = e.target.parentElement;
-    li.querySelector("input[type='file']").click();
-  };
-
-  return (
-    <li>
-      <button onClick={uploadFileHandler}>Upload file</button>
-      <input type="file" onChange={fileChangeHandler} />
-    </li>
-  );
-}

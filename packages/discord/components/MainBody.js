@@ -1,7 +1,11 @@
 import React from "react";
 import Messages from "./Messages";
 
-export default function MainBody({ selectedChannel, messages, username }) {
+export default function MainBody({
+  selectedChannel,
+  messages,
+  username,
+}) {
   const textRef = React.useRef(null);
 
   const fileUploadHandler = (e) => {

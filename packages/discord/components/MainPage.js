@@ -8,6 +8,7 @@ export default function MainPage({ username, channels, selectedChannelId }) {
     selectedChannelId
   );
   const [messages, setMessages] = React.useState(null);
+
   useSSE(selectedChannel, setMessages);
 
   return (

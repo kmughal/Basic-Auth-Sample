@@ -3,7 +3,11 @@ import MessageEditor from "./MessageEditor";
 
 import InnerMessageWrapper from "./InnerMessageWrapper";
 
-export default function Messages({ messages, username, channelId }) {
+export default function Messages({
+  messages,
+  username,
+  channelId,
+}) {
   const [selectedMessage, setSelectedMessage] = React.useState(-1);
 
   return (
@@ -62,4 +66,3 @@ export default function Messages({ messages, username, channelId }) {
     </section>
   );
 }
-
