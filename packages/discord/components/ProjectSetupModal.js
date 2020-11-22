@@ -1,5 +1,5 @@
-import React from "react"
-import Modal from "react-modal"
+import React from "react";
+import Modal from "react-modal";
 
 const customStyles = {
   content: {
@@ -9,22 +9,20 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    width : "300px"
+    width: "300px",
   },
-}
+};
 
 export default function ProjectSetupModal() {
-  
-  const [modalIsOpen, setIsOpen] = React.useState(false)
-  const channelNameRef = React.useRef(null)
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const channelNameRef = React.useRef(null);
 
   React.useEffect(() => {
-    Modal.setAppElement("#__next")
-
-  }, [])
+    Modal.setAppElement("#__next");
+  }, []);
 
   function openModal() {
-    setIsOpen(true)
+    setIsOpen(true);
   }
 
   function afterOpenModal() {
@@ -33,26 +31,32 @@ export default function ProjectSetupModal() {
   }
 
   function closeModal() {
-    setIsOpen(false)
+    setIsOpen(false);
   }
 
-  function saveHandler() {
+  function saveHandler(event) {
     const body = JSON.stringify({
       channelName: channelNameRef.current.value,
-    })
+    });
     fetch("/api/channels", {
       method: "POST",
       body,
       headers: { "content-type": "application/json" },
     })
-      .then((r) => r.json())
-      .then(console.log)
-      .catch(console.error)
+      .then((r) => {
+        window.location.replace("/channels");
+      })
+      .catch(console.error);
   }
 
   return (
     <div className="modal-container">
-      <button className="modal-container__show-modal-button" onClick={openModal}>+</button>
+      <button
+        className="modal-container__show-modal-button"
+        onClick={openModal}
+      >
+        +
+      </button>
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
@@ -61,22 +65,23 @@ export default function ProjectSetupModal() {
         contentLabel="Create a new text channel"
       >
         <h2>Create Text Channel</h2>
-        <form>
-          <div>
-            <label htmlFor="project-name">Channel Name</label>
-            # <input
-              type="text"
-              ref={channelNameRef}
-              name="project-name"
-              placeholder="Test project"
-            />
-          </div>
-          <div className="modal-conainer__action-buttons">
-          <button className="default" onClick={closeModal}>Close</button>
-            <button onClick={saveHandler}>Save</button>
-          </div>
-        </form>
+
+        <div>
+          <label htmlFor="project-name">Channel Name</label>#{" "}
+          <input
+            type="text"
+            ref={channelNameRef}
+            name="project-name"
+            placeholder="Test project"
+          />
+        </div>
+        <div className="modal-conainer__action-buttons">
+          <button className="default" onClick={closeModal}>
+            Close
+          </button>
+          <button onClick={saveHandler}>Save</button>
+        </div>
       </Modal>
     </div>
-  )
+  );
 }

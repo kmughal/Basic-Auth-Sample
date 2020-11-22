@@ -20,7 +20,7 @@ export default async function (req, res) {
     instance.user = user._id
     instance.channelName = channelName
     instance.save()
-    res.status(302).send("Channel created!")
+    res.status(200).send("Channel created!")
     return
   }
 
