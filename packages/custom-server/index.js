@@ -18,6 +18,10 @@ app.use((req, res, next) => {
 
 let clients = [];
 
+app.get("/server/channels", (req, res) => {
+  res.json(ciients).status(200);
+});
+
 app.get("/channels", async (req, res) => {
   // await startMongoose();
   const result = await ChannelModel.find({});

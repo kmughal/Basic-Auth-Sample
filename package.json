@@ -4,7 +4,8 @@
     "workspaces" : ["packages/**"],
     "scripts" : {
         "start" : "yarn workspace discord start",
-        "start:server" : "yarn workspace custom-server start"
+        "start:server" : "yarn workspace custom-server start",
+        "start:server:client" : "yarn workspace custom-server server:client"
     }
     
 }
