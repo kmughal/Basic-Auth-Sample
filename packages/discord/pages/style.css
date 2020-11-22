@@ -11,7 +11,7 @@
 :root {
   --font-color: white;
   --background-color: #36393f;
-  --background-modifier-accent:hsla(0.0%,100%,.0.6);
+  --background-modifier-accent: hsla(0%, 100%, 0.6);
 }
 
 @media (prefers-color-scheme: light) {
@@ -80,13 +80,23 @@ body {
   color: rgb(142, 146, 151);
 }
 
-.projects-container li:hover {
-  color: white;
+.projects-container li a {
+  text-decoration: none;
+  color: rgb(142, 146, 151);
+}
+
+.projects-container li a:hover {
+  color: white !important;
   cursor: pointer;
 }
 
 .projects-container li.selected {
   color: white;
+  font-weight: bold;
+}
+
+.selected-channel a {
+  color: white !important;
   font-weight: bold;
 }
 
@@ -222,7 +232,7 @@ a {
 }
 
 .message-container__not-author {
-  background-color: #7289da;
+  /* background-color: #7289da; */
   text-align: right;
 }
 
@@ -308,4 +318,16 @@ a {
 .main-page__input-text button {
   min-width: 4px;
   background: rgb(64, 68, 75);
+}
+
+.username {
+  margin-bottom: 10px;
+}
+
+.username span {
+  font-weight: bold;
+}
+
+.username span:nth-child(2) {
+  color: rgb(114, 118, 125);
 }

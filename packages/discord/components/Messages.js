@@ -1,11 +1,17 @@
 import React from "react";
 import MessageEditor from "./MessageEditor";
 
+import InnerMessageWrapper from "./InnerMessageWrapper";
+
 export default function Messages({ messages, username, channelId }) {
   const [selectedMessage, setSelectedMessage] = React.useState(-1);
 
   return (
-    <section>
+    <section
+      onMouseLeave={(e) => {
+        setSelectedMessage(-1);
+      }}
+    >
       <ul
         className="message-container"
         // onMouseOut={resetShowEditorArr}
@@ -25,26 +31,22 @@ export default function Messages({ messages, username, channelId }) {
               }}
             >
               {(selectedMessage !== m._id || username !== m.user.username) && (
-                <>
-                  <span className="username">{m.user.username} say :</span>
-                  <span className="user-message">
-                    <InnerMessage
-                      message={m.message}
-                      messageType={m.messageType}
-                    />
-                  </span>
-                </>
+                <InnerMessageWrapper
+                  username={m.user.username}
+                  messageType={m.messageType}
+                  message={m.message}
+                  createdAt={m.created_at}
+                />
               )}
               {selectedMessage === m._id && username === m.user.username && (
                 <>
                   <div className="message-view">
-                    <span className="username">{m.user.username} say :</span>
-                    <span className="user-message">
-                      <InnerMessage
-                        message={m.message}
-                        messageType={m.messageType}
-                      />
-                    </span>
+                    <InnerMessageWrapper
+                      username={m.user.username}
+                      messageType={m.messageType}
+                      message={m.message}
+                      createdAt={m.created_at}
+                    />
                   </div>
                   <MessageEditor
                     message={m.message}
@@ -61,13 +63,3 @@ export default function Messages({ messages, username, channelId }) {
   );
 }
 
-function InnerMessage({ message, messageType }) {
-  const isImage = messageType === "image/png" || messageType === "image/gif";
-
-  return (
-    <>
-      {messageType === "String" && <>{message}</>}
-      {isImage && (<img src={message} height={200} width={200} />)}
-    </>
-  );
-}
