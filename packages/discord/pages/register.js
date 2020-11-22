@@ -1,11 +1,19 @@
-import React from "react"
+import React from "react";
 
 export default function () {
-  const userInput = React.useRef(null)
-  const passwordInput = React.useRef(null)
+  const userInput = React.useRef(null);
+  const passwordInput = React.useRef(null);
+  const [error, setError] = React.useState(null);
 
   const handleFormSubmit = async (e) => {
-    const response = await fetch("/api/register", {
+    if (
+      userInput.current.value.length === 0 ||
+      passwordInput.current.value.length === 0
+    ) {
+      setError("some fields are empty.");
+      return;
+    }
+    await fetch("/api/register", {
       method: "POST",
       body: JSON.stringify({
         username: userInput.current.value,
@@ -14,17 +22,19 @@ export default function () {
       headers: { "CONTENT-TYPE": "application/json" },
     }).then((response) => {
       if (response.ok) {
-        window.location.replace("/login")
+        window.location.replace("/login");
+      } else {
+        setError(response.statusText);
       }
-    })
+    });
 
-    e.preventDefault()
-  }
+    e.preventDefault();
+  };
 
   return (
     <section className="register-container">
       <section>
-      <h1>Create a new account</h1>
+        <h1>Create a new account</h1>
         <input
           type="text"
           id="username"
@@ -45,11 +55,12 @@ export default function () {
         >
           Register
         </button>
-        <br/>
+        <br />
+        {error && <p className="error">{error}</p>}
         <p className="align-center">
-            In to login to your new account <a href="/login">click here.</a>
-          </p>
+          In to login to your new account <a href="/login">click here.</a>
+        </p>
       </section>
     </section>
-  )
+  );
 }
