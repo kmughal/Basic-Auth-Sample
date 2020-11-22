@@ -18,18 +18,17 @@ app.use((req, res, next) => {
 
 let clients = [];
 
-app.get("/server/channels", (req, res) => {
-  res.json(ciients).status(200);
+app.get("/clients", (req, res) => {
+  const result = clients.map((c) => ({ id: c.id, clientId: c.clientId }));
+  res.json(result).status(200);
 });
 
 app.get("/channels", async (req, res) => {
-  // await startMongoose();
   const result = await ChannelModel.find({});
   res.json(result ?? []).status(200);
 });
 
 app.get("/messages", async (req, res) => {
-  // await startMongoose();
   const { channelId } = req.query;
 
   if (!channelId)
