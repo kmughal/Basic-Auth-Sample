@@ -1,14 +1,13 @@
 import React from "react";
 import DeleteMessageButton from "./DeleteMessageButton";
 
-function MessageEditor({ message, messageId, channelId }) {
+function MessageEditor({ message, messageId, channelId, setSelectedMessage }) {
   const [messageEditor, showMessageEditor] = React.useState(false);
   const [messageValue, setMessage] = React.useState(message);
 
   let editor = null;
-  let userMessage = null;
 
-  const updateMessageHandler = () => {
+  const updateMessageHandler = (e) => {
     const body = JSON.stringify({
       messageId,
       message: messageValue,
@@ -16,21 +15,20 @@ function MessageEditor({ message, messageId, channelId }) {
 
     function doChangesAfterMessageUpdate(response) {
       if (response.ok) {
-        const editor = event.target.parentElement;
-        const messageContainer =
-          editor.parentElement.parentElement.parentElement;
-        messageContainer
-          .querySelector( ".user-message")
-          .classList.remove("hide-block");
-        messageContainer
-          .querySelector(".editor-container")
-          .classList.add("hide-block");
-        messageContainer.querySelector(
-          ".user-message"
-        ).innerHTML = messageValue;
+        const editorContainer =
+          e.target.parentElement.parentElement.parentElement;
+        editor = editorContainer.querySelector(".editor");
+        const messageItem = editor.parentElement.parentElement;
+
+        editor.parentElement.removeChild(editor);
+        const userMessageEl = messageItem.querySelector(".user-message");
+
+        userMessageEl.classList.remove("hide-block");
+        userMessageEl.innerHTML = messageValue;
+        setSelectedMessage(-1);
       }
     }
-   
+
     fetch("/api/messages", {
       method: "PUT",
       body,
@@ -53,7 +51,7 @@ function MessageEditor({ message, messageId, channelId }) {
           }}
           onKeyDown={(e) => {
             if (e.keyCode === 13) {
-              updateMessageHandler();
+              updateMessageHandler(e);
               cancelHandler();
             } else if (e.keyCode === 27) {
               cancelHandler();
@@ -70,15 +68,15 @@ function MessageEditor({ message, messageId, channelId }) {
               let editorContainer =
                 e.target.parentElement.parentElement.parentElement;
               editor = editorContainer.querySelector(".editor");
-              let editorMenu = editorContainer.querySelector(".editor-menu");
-
               editor.classList.remove("hide-block");
-              editorMenu.classList.add("hide-block");
 
-              userMessage = editorContainer.parentElement.querySelector(
-                ".user-message"
-              );
-              userMessage.classList.add("hide-block");
+              const messageItem = editor.parentElement.parentElement;
+              messageItem
+                .querySelector(".user-message")
+                .classList.add("hide-block");
+               const editMenu =  messageItem.querySelector(".editor-menu");
+               editMenu.classList.add("hide-block");
+              
             }}
           >
             Edit

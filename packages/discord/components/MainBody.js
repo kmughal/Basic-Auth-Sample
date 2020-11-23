@@ -94,6 +94,7 @@ export default function MainBody({
             name="text"
             ref={textRef}
             onKeyDown={textKeyDownHandler}
+            placeholder="type here...."
           />
           <input
             type="file"

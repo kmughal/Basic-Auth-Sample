@@ -13,7 +13,7 @@ export default function Messages({
   return (
     <section
       onMouseLeave={(e) => {
-        setSelectedMessage(-1);
+       // setSelectedMessage(-1);
       }}
     >
       <ul
@@ -25,8 +25,8 @@ export default function Messages({
             <li
               className={
                 username === m.user.username
-                  ? "message-container__author"
-                  : "message-container__not-author"
+                  ? "message-container__item message-container__author"
+                  : "message-container__item message-container__not-author"
               }
               key={m._id}
               data-key={m._id}
@@ -56,6 +56,7 @@ export default function Messages({
                     message={m.message}
                     messageId={m._id}
                     channelId={channelId}
+                    setSelectedMessage={setSelectedMessage}
                   />
                 </>
               )}
