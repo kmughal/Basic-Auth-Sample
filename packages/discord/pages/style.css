@@ -32,6 +32,7 @@ body {
   font-family: "FiraSans-Light";
   background: var(--background-color);
   color: var(--font-color);
+  overflow: hidden;
 }
 
 .sign-out-container {
@@ -204,6 +205,7 @@ a {
   flex: 20;
   margin-bottom: 5px;
   border-radius: 15px;
+  overflow-y: auto;
 }
 
 .main-page__input-text {
@@ -234,6 +236,11 @@ a {
 .message-container__not-author {
   /* background-color: #7289da; */
   text-align: right;
+}
+
+.editor-menu {
+  position: relative;
+  z-index: 9999;
 }
 
 .editor-menu ul {
@@ -303,7 +310,12 @@ a {
 }
 
 .hide-block {
-  display: none;
+  display: none !important;
+}
+
+#emoji-container,
+#emoji-container button {
+  background: transparent;
 }
 
 .upload-file-ref {

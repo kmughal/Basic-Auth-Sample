@@ -24,6 +24,7 @@ function MessageEditor({ message, messageId, channelId, setSelectedMessage }) {
         const userMessageEl = messageItem.querySelector(".user-message");
 
         userMessageEl.classList.remove("hide-block");
+        debugger;
         userMessageEl.innerHTML = messageValue;
         setSelectedMessage(-1);
       }

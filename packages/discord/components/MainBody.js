@@ -1,12 +1,29 @@
 import React from "react";
+import "emoji-mart/css/emoji-mart.css";
+import { Picker } from "emoji-mart";
 import Messages from "./Messages";
+import MessageTypes from "./types/message-types";
 
-export default function MainBody({
-  selectedChannel,
-  messages,
-  username,
-}) {
+export default function MainBody({ selectedChannel, messages, username }) {
   const textRef = React.useRef(null);
+  const [emoji, setEmoji] = React.useState(null);
+
+  const onEmojiClick = (e) => {
+    setEmoji(e.id);
+    const body = JSON.stringify({
+      message: e.id,
+      channelId: selectedChannel,
+      messageType: MessageTypes.emoji,
+    });
+
+    fetch("/api/messages", {
+      body,
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      credentials: "same-origin",
+    }).catch(console.error);
+    document.getElementById("emoji-container").classList.add("hide-block");
+  };
 
   const fileUploadHandler = (e) => {
     const files = e.target.files;
@@ -67,7 +84,12 @@ export default function MainBody({
 
   return (
     <section className="main-page__main-body">
-      <p>&#128512;</p>
+      <div id="emoji-container" className="hide-block">
+        <Picker
+          onSelect={onEmojiClick}
+          style={{ position: "absolute", bottom: "20px", right: "20px" }}
+        />
+      </div>
       <section className="main-page__channel-history">
         {messages && messages.length === 0 && <p>Start a conversion!</p>}
         {messages && messages.length > 0 && (
@@ -96,6 +118,17 @@ export default function MainBody({
             onKeyDown={textKeyDownHandler}
             placeholder="type here...."
           />
+
+          <button
+            onClick={(e) => {
+              document
+                .getElementById("emoji-container")
+                .classList.remove("hide-block");
+            }}
+          >
+            Emoji
+          </button>
+
           <input
             type="file"
             className="hide-block"
